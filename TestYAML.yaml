@@ -1,0 +1,30 @@
+# trigger 11
+
+name: $(Date:yyyyMMdd).$(Rev:r)
+
+variables:
+  apiId: 'example'
+  system.debug: true
+
+# trigger:
+#   batch: true
+#   branches:
+#     include:
+#     - "*"
+
+stages:
+- stage: Build
+  jobs:
+  - job: 'Build'
+    pool:
+      vmImage: 'windows-latest'
+    steps:
+    - task: AzureCLI@2
+      inputs:
+        azureSubscription: 'Microsoft Azure Internal Consumption_Neil (371e0bf5-d863-405d-bbaf-2514cbbd9e8a)'
+        scriptType: 'ps'
+        scriptLocation: 'inlineScript'
+        inlineScript: |
+          echo "hello world"
+          az --version
+          az account show
